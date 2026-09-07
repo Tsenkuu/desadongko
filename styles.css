@@ -74,7 +74,11 @@ header {
     margin-bottom: 60px;
 }
 
-header img {
+.header-logo {
+    max-width: 100%;
+    height: auto;
+    max-height: 120px;
+    margin-bottom: 20px;
     animation: float 6s ease-in-out infinite;
     filter: drop-shadow(0 15px 20px rgba(0,0,0,0.15));
 }
@@ -131,8 +135,59 @@ header p {
     width: 100%;
 }
 
+.section-desc {
+    text-align: center;
+    font-size: 1.15rem;
+    color: #4b5563;
+    margin-top: -25px;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+/* Embed Containers for GDrive and Canva */
+.embed-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio for video */
+    height: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.6);
+    margin-bottom: 50px;
+    background: #000;
+}
+
+.embed-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.canva-embed-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 1px solid rgba(255,255,255,0.6);
+    margin-bottom: 50px;
+    background: #f3f4f6;
+}
+
+.canva-embed-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
 .grid-container {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 40px;
     margin-bottom: 70px;
 }
@@ -201,6 +256,39 @@ header p {
     line-height: 1.7;
 }
 
+.gallery-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 28px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255,255,255,0.6);
+    margin-bottom: 60px;
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.gallery-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-icon {
+    font-size: 5rem;
+    color: var(--primary-green);
+    filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+    transition: transform 0.5s ease;
+}
+
+.gallery-card:hover .gallery-icon {
+    transform: scale(1.1);
+}
+
+.gallery-content {
+    flex-grow: 1;
+}
+
 .btn {
     display: inline-flex;
     justify-content: center;
@@ -244,7 +332,7 @@ header p {
 
 /* Specific styling for shadow colors */
 .card:nth-child(2) .btn {
-    box-shadow: 0 10px 20px -5px rgba(255, 0, 80, 0.5);
+    box-shadow: 0 10px 20px -5px rgba(255, 0, 80, 0.4);
 }
 .card:nth-child(2) .btn:hover {
     box-shadow: 0 25px 30px -10px rgba(255, 0, 80, 0.6);
@@ -259,4 +347,71 @@ footer {
     font-size: 1rem;
     letter-spacing: 1px;
     font-weight: 500;
+}
+
+/* RESPONSIVE DESIGN UNTUK MOBILE */
+@media (max-width: 900px) {
+    .gallery-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        margin: 20px auto;
+        padding: 30px 20px;
+        border-radius: 20px;
+    }
+
+    header h1 {
+        font-size: 2.8rem;
+    }
+
+    header p {
+        font-size: 1.05rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+    }
+
+    .section-desc {
+        font-size: 1rem;
+        margin-top: -15px;
+    }
+
+    .card-icon {
+        padding: 40px 0;
+        font-size: 3.5rem;
+    }
+
+    .card-content {
+        padding: 25px;
+    }
+
+    .canva-embed-container {
+        height: 500px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 2.2rem;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .canva-embed-container {
+        height: 400px;
+    }
+    
+    .embed-container {
+        border-radius: 16px;
+    }
 }
