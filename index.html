@@ -14,9 +14,6 @@
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Leaflet CSS for Map -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-
     <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -151,8 +148,8 @@
                 <div class="culture-carousel fade-up delay-1">
                     <div class="culture-card">
                         <div class="culture-image">
+                            <img src="assets/budaya_ngitung_batih.jpg" alt="Ngitung Batih" class="culture-photo">
                             <div class="culture-number">01</div>
-                            <i class="fa-solid fa-users culture-icon"></i>
                         </div>
                         <div class="culture-body">
                             <h3 class="culture-title">Ngitung Batih</h3>
@@ -162,8 +159,8 @@
                     
                     <div class="culture-card">
                         <div class="culture-image">
+                            <img src="assets/budaya_turonggo_yakso.jpg" alt="Turonggo Yakso" class="culture-photo">
                             <div class="culture-number">02</div>
-                            <i class="fa-solid fa-horse-head culture-icon"></i>
                         </div>
                         <div class="culture-body">
                             <h3 class="culture-title">Turonggo Yakso</h3>
@@ -173,8 +170,8 @@
                     
                     <div class="culture-card">
                         <div class="culture-image">
+                            <img src="assets/budaya_terbang_eloh.jpg" alt="Terbang Eloh" class="culture-photo">
                             <div class="culture-number">03</div>
-                            <i class="fa-solid fa-drum culture-icon"></i>
                         </div>
                         <div class="culture-body">
                             <h3 class="culture-title">Terbang Eloh</h3>
@@ -194,50 +191,9 @@
                     <p class="section-desc">Jelajahi berbagai fasilitas, ruang publik, dan lokasi penting di sekitar Desa Dongko.</p>
                 </div>
                 
-                <div class="map-interactive-wrapper fade-up delay-1">
-                    
-                    <!-- Search & Tools -->
-                    <div class="map-toolbar">
-                        <div class="map-search-container">
-                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                            <input type="text" id="map-search-input" placeholder="Cari lokasi di Dongko..." autocomplete="off">
-                            <div id="map-search-results" class="search-results"></div>
-                        </div>
-                        <button id="btn-locate" class="btn-map-tool">
-                            <i class="fa-solid fa-location-crosshairs"></i> Lokasi Saya
-                        </button>
-                    </div>
-
-                    <!-- Filters (Horizontal scroll on mobile) -->
-                    <div class="map-filters-scroll">
-                        <div class="map-filters">
-                            <button class="filter-chip active" data-filter="semua">Semua</button>
-                            <button class="filter-chip" data-filter="pemerintahan">Pemerintahan</button>
-                            <button class="filter-chip" data-filter="kesehatan">Kesehatan</button>
-                            <button class="filter-chip" data-filter="pendidikan">Pendidikan</button>
-                            <button class="filter-chip" data-filter="ibadah">Ibadah</button>
-                            <button class="filter-chip" data-filter="pasar">Pasar</button>
-                            <button class="filter-chip" data-filter="lapangan">Lapangan</button>
-                            <button class="filter-chip" data-filter="spbu">SPBU</button>
-                        </div>
-                    </div>
-
-                    <!-- Map Container -->
-                    <div id="dongko-map" class="map-container"></div>
-                    
-                    <!-- Map Legend -->
-                    <div class="map-legend">
-                        <h4 class="legend-title">LEGENDA</h4>
-                        <div class="legend-grid">
-                            <div class="legend-item"><span class="legend-color" style="border: 2px dashed #D4AF37; background: rgba(212,175,55,0.2);"></span> Batas Desa</div>
-                            <div class="legend-item"><i class="fa-solid fa-building-columns" style="color: #D4AF37;"></i> Pemerintahan</div>
-                            <div class="legend-item"><i class="fa-solid fa-hospital" style="color: #e63946;"></i> Puskesmas</div>
-                            <div class="legend-item"><i class="fa-solid fa-school" style="color: #1d3557;"></i> Pendidikan</div>
-                            <div class="legend-item"><i class="fa-solid fa-store" style="color: #f4a261;"></i> Pasar</div>
-                            <div class="legend-item"><i class="fa-solid fa-mosque" style="color: #2a9d8f;"></i> Masjid</div>
-                            <div class="legend-item"><i class="fa-solid fa-futbol" style="color: #2D4A3E;"></i> Lapangan</div>
-                            <div class="legend-item"><i class="fa-solid fa-gas-pump" style="color: #457b9d;"></i> SPBU</div>
-                        </div>
+                    <!-- Peta Sederhana (Google Maps Iframe) -->
+                    <div class="embed-wrapper fade-up delay-1" style="margin-top: 2rem;">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d28591.038776096673!2d111.55375027811814!3d-8.175956948931887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e79168318304561%3A0x2d5690194b97444e!2sDongko%2C%20Kec.%20Dongko%2C%20Kabupaten%20Trenggalek%2C%20Jawa%20Timur!5e1!3m2!1sid!2sid!4v1788841375470!5m2!1sid!2sid" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                     </div>
                 </div>
             </div>
@@ -393,10 +349,7 @@
         });
     </script>
     
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    
     <!-- Custom Map Logic -->
-    <script src="assets/map-data.js"></script>
+    <!-- (Map logic removed per user request for simple iframe) -->
 </body>
 </html>

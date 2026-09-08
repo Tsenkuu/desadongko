@@ -1,17 +1,21 @@
 // map-data.js
-// Data & Logic for Desa Dongko Interactive Map
+// Data & Logic for Desa Dongko Interactive Map - GOOGLE MAPS API VERSION
 
-const MAP_CENTER = [-8.1880, 111.5747];
-const MAP_ZOOM = 14;
+// Default map center (Pusat Kecamatan Dongko)
+const DEFAULT_CENTER = { lat: -8.1898793, lng: 111.5766407 };
+const DEFAULT_ZOOM = 14;
 
-// Marker Data (Disesuaikan dengan tata letak pada gambar Reklame Desa)
+// ---------------------------------------------------------
+// MARKER DATA
+// PENTING: Hanya isi koordinat latitude dan longitude dengan nilai asli/benar.
+// ---------------------------------------------------------
 const locations = [
     {
         id: 1,
         name: "Kantor Desa Dongko",
         category: "pemerintahan",
-        lat: -8.1830,
-        lng: 111.5800,
+        lat: -8.1880, // Contoh data asli yang divalidasi
+        lng: 111.5747,
         icon: "fa-building-columns",
         color: "#D4AF37", 
         desc: "Pusat pelayanan administrasi dan pemerintahan Desa Dongko."
@@ -20,8 +24,8 @@ const locations = [
         id: 2,
         name: "Kantor Kecamatan Dongko",
         category: "pemerintahan",
-        lat: -8.1950,
-        lng: 111.5820,
+        lat: null, // [MEMBUTUHKAN KOORDINAT ASLI]
+        lng: null,
         icon: "fa-landmark",
         color: "#D4AF37",
         desc: "Pusat pemerintahan tingkat kecamatan."
@@ -30,8 +34,8 @@ const locations = [
         id: 3,
         name: "Puskesmas Dongko",
         category: "kesehatan",
-        lat: -8.2000,
-        lng: 111.5620,
+        lat: null, // [MEMBUTUHKAN KOORDINAT ASLI]
+        lng: null,
         icon: "fa-hospital",
         color: "#e63946",
         desc: "Fasilitas pelayanan kesehatan masyarakat Dongko."
@@ -40,8 +44,8 @@ const locations = [
         id: 4,
         name: "Lapangan Dongko Culture",
         category: "lapangan",
-        lat: -8.1700,
-        lng: 111.5720,
+        lat: null, // [MEMBUTUHKAN KOORDINAT ASLI]
+        lng: null,
         icon: "fa-futbol",
         color: "#2D4A3E",
         desc: "Area ruang publik terbuka untuk olahraga dan acara kebudayaan."
@@ -50,264 +54,325 @@ const locations = [
         id: 5,
         name: "Pasar Dongko",
         category: "pasar",
-        lat: -8.1880,
-        lng: 111.5750,
+        lat: null, // [MEMBUTUHKAN KOORDINAT ASLI]
+        lng: null,
         icon: "fa-store",
         color: "#f4a261",
-        desc: "Pusat kegiatan ekonomi dan perdagangan tradisional warga sejak 1919."
+        desc: "Pusat kegiatan ekonomi dan perdagangan tradisional warga."
     },
     {
         id: 6,
-        name: "Koramil Dongko",
-        category: "pemerintahan",
-        lat: -8.2020,
-        lng: 111.5720,
-        icon: "fa-shield-halved",
+        name: "Pom Bensin",
+        category: "spbu",
+        lat: null, // [MEMBUTUHKAN KOORDINAT ASLI]
+        lng: null,
+        icon: "fa-gas-pump",
         color: "#457b9d",
-        desc: "Komando Rayon Militer Desa Dongko."
+        desc: "Stasiun pengisian bahan bakar umum."
     },
     {
         id: 7,
-        name: "Sekolah (SDN Dongko)",
+        name: "Pendidikan",
         category: "pendidikan",
-        lat: -8.1900,
-        lng: 111.5650,
+        lat: null, // [MEMBUTUHKAN KOORDINAT ASLI]
+        lng: null,
         icon: "fa-school",
         color: "#1d3557",
-        desc: "Fasilitas pendidikan dasar di wilayah Dongko."
+        desc: "Fasilitas pendidikan di wilayah Dongko."
     },
     {
         id: 8,
-        name: "Masjid Baiturrahman",
+        name: "Masjid",
         category: "ibadah",
-        lat: -8.1860,
-        lng: 111.5730,
+        lat: null, // [MEMBUTUHKAN KOORDINAT ASLI]
+        lng: null,
         icon: "fa-mosque",
         color: "#2a9d8f",
-        desc: "Tempat ibadah utama umat muslim di sekitar pusat desa."
+        desc: "Tempat ibadah utama warga desa."
     }
 ];
 
-// Batas Desa (Bentuk disesuaikan dengan gambar reklame: bentuk menyerupai kepala menghadap kiri)
-const villageBoundary = [
-    [-8.165, 111.570], // Top
-    [-8.168, 111.578], // Top Right
-    [-8.175, 111.582], // Right bulge
-    [-8.185, 111.578], // Indent
-    [-8.190, 111.585], // Lower Right bulge (near Kantor Kecamatan)
-    [-8.205, 111.585], // Bottom Right
-    [-8.208, 111.575], // Bottom Mid
-    [-8.205, 111.565], // Bottom Left (near Puskesmas)
-    [-8.195, 111.555], // Left bulge down
-    [-8.180, 111.550], // Left bulge up
-    [-8.170, 111.560], // Top Left
-];
-
-// Jalan Provinsi (Garis Kuning pada gambar)
-const jalanProvinsi = [
-    [-8.165, 111.573], // Dari utara
-    [-8.180, 111.573], // Lurus ke tengah
-    [-8.188, 111.575], // Melewati pasar
-    [-8.192, 111.560], // Belok ke barat/kiri
-    [-8.205, 111.555]  // Ke arah selatan daya
-];
-
-// Initialize Map
 let map;
 let markers = [];
+let infoWindow;
 let userMarker = null;
-let userCircle = null;
+let geojsonBounds = null;
 
-document.addEventListener('DOMContentLoaded', () => {
-    // Pastikan elemen map ada sebelum inisialisasi
+// Initialize Google Maps API
+window.initMap = async function() {
     const mapElement = document.getElementById('dongko-map');
     if (!mapElement) return;
 
-    // Init map
-    map = L.map('dongko-map', {
-        zoomControl: false, // Kita pindahkan ke posisi yang lebih nyaman di mobile
-        scrollWheelZoom: false, // Mencegah ter-scroll tak sengaja di desktop
-        tap: false // Perbaikan isu tap di beberapa browser mobile
-    }).setView(MAP_CENTER, MAP_ZOOM);
+    // Load necessary libraries
+    const { Map } = await google.maps.importLibrary("maps");
+    const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
-    // Reposition zoom control
-    L.control.zoom({
-        position: 'bottomright'
-    }).addTo(map);
+    // Initialize Map with multiple controls
+    map = new Map(mapElement, {
+        center: DEFAULT_CENTER,
+        zoom: DEFAULT_ZOOM,
+        mapId: "DEMO_MAP_ID", // Dibutuhkan untuk menggunakan AdvancedMarkerElement
+        mapTypeId: google.maps.MapTypeId.ROADMAP,
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.DEFAULT,
+            position: google.maps.ControlPosition.TOP_LEFT,
+        },
+        zoomControl: true,
+        fullscreenControl: true,
+        streetViewControl: false
+    });
 
-    // Add OpenStreetMap tiles dengan styling ringan via CSS filter nantinya
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> | Data batas desa: Ardi',
-        maxZoom: 18,
-    }).addTo(map);
+    infoWindow = new google.maps.InfoWindow();
 
-    // Add Village Boundary (Garis Kuning)
-    const polygon = L.polygon(villageBoundary, {
-        color: '#D4AF37', // Gold/Kuning elegan
-        weight: 3,
-        opacity: 0.9,
+    // 1. LOAD GEOJSON BATAS DESA
+    const overlayError = document.getElementById('map-error-overlay');
+    const focusBtn = document.getElementById('btn-focus-desa');
+    geojsonBounds = new google.maps.LatLngBounds();
+
+    map.data.loadGeoJson('assets/dongko.geojson', null, function(features) {
+        if(features.length > 0) {
+            // Sembunyikan error jika geojson berhasil
+            if(overlayError) overlayError.style.display = 'none';
+            if(focusBtn) {
+                focusBtn.style.display = 'flex';
+            }
+
+            // Hitung bounds (koordinat batas wilayah)
+            map.data.forEach(function(feature) {
+                const geometry = feature.getGeometry();
+                if(geometry.getType() === 'Polygon') {
+                    geometry.getArray().forEach(path => {
+                        path.getArray().forEach(latLng => geojsonBounds.extend(latLng));
+                    });
+                } else if(geometry.getType() === 'MultiPolygon') {
+                    geometry.getArray().forEach(polygon => {
+                        polygon.getArray().forEach(path => {
+                            path.getArray().forEach(latLng => geojsonBounds.extend(latLng));
+                        });
+                    });
+                }
+            });
+
+            // Fokus ke bounds desa
+            if(!geojsonBounds.isEmpty()) {
+                map.fitBounds(geojsonBounds);
+            }
+        }
+    });
+
+    // Style Polygon sesuai permintaan: Garis Kuning 3px, Fill kuning transparan 10-15%
+    map.data.setStyle({
+        strokeColor: '#D4AF37', // Kuning
+        strokeWeight: 3,
         fillColor: '#D4AF37',
-        fillOpacity: 0.05,
-        dashArray: '5, 10'
-    }).addTo(map);
-    
-    // Fit bounds to polygon initially
-    map.fitBounds(polygon.getBounds());
+        fillOpacity: 0.15
+    });
 
-    // Add Jalan Provinsi (Garis Kuning)
-    const road = L.polyline(jalanProvinsi, {
-        color: '#f4a261', // Kuning/Orange (Jalan Provinsi)
-        weight: 4,
-        opacity: 0.9,
-        dashArray: '10, 10'
-    }).addTo(map);
+    // Menangkap jika data kosong setelah delay
+    setTimeout(() => {
+        let hasData = false;
+        map.data.forEach(() => hasData = true);
+        if(!hasData) {
+            console.warn("GeoJSON tidak dimuat atau kosong.");
+            if(overlayError) overlayError.style.display = 'flex';
+        }
+    }, 1500);
 
-    // Create custom FontAwesome icon builder
-    const createCustomIcon = (iconClass, color) => {
-        return L.divIcon({
-            className: 'custom-map-marker',
-            html: `<div class="marker-pin" style="background-color: ${color}"><i class="fa-solid ${iconClass}"></i></div><div class="marker-shadow"></div>`,
-            iconSize: [40, 48],
-            iconAnchor: [20, 48],
-            popupAnchor: [0, -40]
-        });
+    // 2. RENDER MARKERS KUSTOM
+    const createCustomContent = (iconClass, color) => {
+        const div = document.createElement('div');
+        div.className = 'custom-map-marker';
+        div.innerHTML = `<div class="marker-pin" style="background-color: ${color}"><i class="fa-solid ${iconClass}"></i></div>`;
+        return div;
     };
 
-    // Render markers
     const renderMarkers = (filterCategory = 'semua') => {
-        // Clear existing markers
-        markers.forEach(m => map.removeLayer(m));
+        // Hapus marker lama
+        markers.forEach(m => m.map = null);
         markers = [];
 
         locations.forEach(loc => {
-            if (filterCategory === 'semua' || loc.category === filterCategory) {
-                const marker = L.marker([loc.lat, loc.lng], {
-                    icon: createCustomIcon(loc.icon, loc.color)
-                }).addTo(map);
+            // HANYA RENDER JIKA KOORDINAT VALID
+            if (loc.lat !== null && loc.lng !== null) {
+                if (filterCategory === 'semua' || loc.category === filterCategory) {
+                    
+                    const marker = new AdvancedMarkerElement({
+                        map: map,
+                        position: { lat: loc.lat, lng: loc.lng },
+                        content: createCustomContent(loc.icon, loc.color),
+                        title: loc.name
+                    });
 
-                // Buat URL Google Maps untuk petunjuk arah
-                const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}`;
+                    marker.addListener('click', () => {
+                        const gmapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${loc.lat},${loc.lng}`;
+                        const popupContent = `
+                            <div class="map-popup-google" style="min-width: 200px;">
+                                <span class="popup-category" style="font-size:0.7rem; color:${loc.color}; font-weight:bold;">${loc.category.toUpperCase()}</span>
+                                <h4 style="margin:5px 0;">${loc.name}</h4>
+                                <p style="font-size:0.85rem; margin-bottom:10px;">${loc.desc}</p>
+                                <a href="${gmapsUrl}" target="_blank" class="btn-popup" style="display:inline-block; background:${loc.color}; color:white; padding:5px 10px; text-decoration:none; border-radius:4px; font-size:0.8rem;">
+                                    <i class="fa-solid fa-location-arrow"></i> Petunjuk Arah
+                                </a>
+                            </div>
+                        `;
+                        infoWindow.setContent(popupContent);
+                        infoWindow.open(map, marker);
+                    });
 
-                const popupContent = `
-                    <div class="map-popup">
-                        <span class="popup-category">${loc.category.toUpperCase()}</span>
-                        <h4 class="popup-title">${loc.name}</h4>
-                        <p class="popup-desc">${loc.desc}</p>
-                        <a href="${gmapsUrl}" target="_blank" class="btn-popup">
-                            <i class="fa-solid fa-location-arrow"></i> Petunjuk Arah
-                        </a>
-                    </div>
-                `;
-                marker.bindPopup(popupContent);
-                markers.push(marker);
+                    marker._customLoc = loc; 
+                    markers.push(marker);
+                }
             }
         });
     };
 
-    renderMarkers(); // Initial render
+    renderMarkers();
 
-    // --- FITUR: FILTER (CHIPS) ---
+    // 3. FITUR: FOCUS KE DESA
+    if(focusBtn) {
+        focusBtn.addEventListener('click', () => {
+            if(geojsonBounds && !geojsonBounds.isEmpty()) {
+                map.fitBounds(geojsonBounds);
+            }
+        });
+    }
+
+    // 4. FITUR: FILTER CHIPS
     const filterChips = document.querySelectorAll('.filter-chip');
     filterChips.forEach(chip => {
         chip.addEventListener('click', (e) => {
-            // Remove active class from all
             filterChips.forEach(c => c.classList.remove('active'));
-            // Add active class to clicked
             e.target.classList.add('active');
-            
             const category = e.target.getAttribute('data-filter');
             renderMarkers(category);
         });
     });
 
-    // --- FITUR: SEARCH ---
+    // 5. FITUR: SEARCH LOKASI
     const searchInput = document.getElementById('map-search-input');
     const searchResults = document.getElementById('map-search-results');
 
-    searchInput.addEventListener('input', (e) => {
-        const query = e.target.value.toLowerCase();
-        searchResults.innerHTML = '';
-        
-        if (query.length < 2) {
-            searchResults.style.display = 'none';
-            return;
-        }
+    if(searchInput && searchResults) {
+        searchInput.addEventListener('input', (e) => {
+            const query = e.target.value.toLowerCase();
+            searchResults.innerHTML = '';
+            
+            if (query.length < 2) {
+                searchResults.style.display = 'none';
+                return;
+            }
 
-        const filtered = locations.filter(loc => loc.name.toLowerCase().includes(query) || loc.category.toLowerCase().includes(query));
-        
-        if (filtered.length > 0) {
-            searchResults.style.display = 'block';
-            filtered.forEach(loc => {
-                const div = document.createElement('div');
-                div.className = 'search-result-item';
-                div.innerHTML = `<i class="fa-solid ${loc.icon}" style="color:${loc.color}"></i> <span>${loc.name}</span>`;
-                div.addEventListener('click', () => {
-                    map.setView([loc.lat, loc.lng], 16);
-                    renderMarkers('semua'); // reset filter
-                    
-                    // Reset UI
-                    document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
-                    document.querySelector('.filter-chip[data-filter="semua"]').classList.add('active');
-                    
-                    searchInput.value = '';
-                    searchResults.style.display = 'none';
-                    
-                    // Trigger popup (find the specific marker)
-                    const targetMarker = markers.find(m => m.getLatLng().lat === loc.lat && m.getLatLng().lng === loc.lng);
-                    if (targetMarker) targetMarker.openPopup();
+            const filtered = locations.filter(loc => loc.lat !== null && loc.lng !== null && (loc.name.toLowerCase().includes(query) || loc.category.toLowerCase().includes(query)));
+            
+            if (filtered.length > 0) {
+                searchResults.style.display = 'block';
+                filtered.forEach(loc => {
+                    const div = document.createElement('div');
+                    div.className = 'search-result-item';
+                    div.innerHTML = `<i class="fa-solid ${loc.icon}" style="color:${loc.color}"></i> <span>${loc.name}</span>`;
+                    div.addEventListener('click', () => {
+                        map.setZoom(17);
+                        map.panTo({ lat: loc.lat, lng: loc.lng });
+                        renderMarkers('semua');
+                        
+                        document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+                        document.querySelector('.filter-chip[data-filter="semua"]').classList.add('active');
+                        
+                        searchInput.value = '';
+                        searchResults.style.display = 'none';
+                        
+                        const targetMarker = markers.find(m => m.position.lat === loc.lat && m.position.lng === loc.lng);
+                        if(targetMarker) {
+                            google.maps.event.trigger(targetMarker, 'click');
+                        }
+                    });
+                    searchResults.appendChild(div);
                 });
-                searchResults.appendChild(div);
-            });
-        } else {
-            searchResults.style.display = 'block';
-            searchResults.innerHTML = '<div class="search-result-item">Tidak ditemukan</div>';
-        }
-    });
+            } else {
+                searchResults.style.display = 'block';
+                searchResults.innerHTML = '<div class="search-result-item">Tidak ditemukan lokasi yang valid</div>';
+            }
+        });
 
-    // Close search results when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!e.target.closest('.map-search-container')) {
-            searchResults.style.display = 'none';
-        }
-    });
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.map-search-container')) {
+                searchResults.style.display = 'none';
+            }
+        });
+    }
 
-    // --- FITUR: LOKASI SAYA ---
+    // 6. FITUR: LOKASI SAYA
     const locateBtn = document.getElementById('btn-locate');
-    locateBtn.addEventListener('click', () => {
-        locateBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mencari...';
+    let userCircle = null;
+    
+    if(locateBtn) {
+        locateBtn.addEventListener('click', () => {
+            if (!navigator.geolocation) {
+                alert("Browser Anda tidak mendukung Geolocation.");
+                return;
+            }
+            
+            locateBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Mencari...';
+            
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    const accuracy = Math.round(position.coords.accuracy);
+                    const latlng = { lat: lat, lng: lng };
+
+                    if (userMarker) userMarker.map = null;
+                    if (userCircle) userCircle.setMap(null);
+
+                    userMarker = new AdvancedMarkerElement({
+                        map: map,
+                        position: latlng,
+                        content: createCustomContent('fa-street-view', '#1d3557'),
+                        title: 'Lokasi Anda'
+                    });
+
+                    userMarker.addListener('click', () => {
+                        infoWindow.setContent(`<div style="padding:10px;"><strong>Posisi Anda</strong><br>Akurasi: ${accuracy} meter</div>`);
+                        infoWindow.open(map, userMarker);
+                    });
+
+                    userCircle = new google.maps.Circle({
+                        strokeColor: "#1d3557",
+                        strokeOpacity: 0.8,
+                        strokeWeight: 2,
+                        fillColor: "#457b9d",
+                        fillOpacity: 0.2,
+                        map,
+                        center: latlng,
+                        radius: accuracy / 2,
+                    });
+
+                    map.setZoom(17);
+                    map.panTo(latlng);
+                    
+                    locateBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Lokasi Saya';
+                },
+                (error) => {
+                    alert("Lokasi tidak dapat diakses. Pastikan Anda mengizinkan akses GPS di browser Anda.");
+                    locateBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Lokasi Saya';
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        });
+    }
+
+    // 7. PUSH LEGENDA KE DALAM GOOGLE MAPS CONTROLS
+    const legendElement = document.querySelector('.map-legend');
+    if (legendElement) {
+        // Hapus margin top yang sebelumnya diset di CSS agar rapi sebagai floating control
+        legendElement.style.marginTop = '0';
+        legendElement.style.marginRight = '10px';
+        legendElement.style.marginBottom = '20px';
+        legendElement.style.boxShadow = '0 2px 6px rgba(0,0,0,0.3)';
         
-        map.locate({setView: true, maxZoom: 16});
-    });
+        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(legendElement);
+    }
+};
 
-    map.on('locationfound', (e) => {
-        const radius = e.accuracy / 2;
-
-        if (userMarker) {
-            map.removeLayer(userMarker);
-            map.removeLayer(userCircle);
-        }
-
-        userMarker = L.marker(e.latlng, {
-            icon: L.divIcon({
-                className: 'custom-map-marker',
-                html: `<div class="marker-pin user-pin" style="background-color:#1d3557"><i class="fa-solid fa-street-view"></i></div><div class="marker-shadow"></div>`,
-                iconSize: [40, 48],
-                iconAnchor: [20, 48],
-                popupAnchor: [0, -40]
-            })
-        }).addTo(map).bindPopup("<div class='map-popup'><h4 class='popup-title'>Lokasi Anda Saat Ini</h4><p class='popup-desc'>Akurasi: "+Math.round(radius)+" meter.</p></div>").openPopup();
-
-        userCircle = L.circle(e.latlng, radius, {
-            color: '#1d3557',
-            fillColor: '#457b9d',
-            fillOpacity: 0.2
-        }).addTo(map);
-
-        locateBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Lokasi Saya';
-    });
-
-    map.on('locationerror', (e) => {
-        alert("Lokasi tidak dapat diakses. Silakan izinkan akses lokasi pada browser Anda.");
-        locateBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Lokasi Saya';
-    });
-});
+// Panggil fungsi inisialisasi secara dinamis (fallback support jika tag <script> tidak async)
