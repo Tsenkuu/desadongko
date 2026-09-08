@@ -2,93 +2,401 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pesona Desa Dongko</title>
-    <meta name="description" content="Kumpulan Ebook dan Video Dokumenter Desa Dongko">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Desa Dongko | Jungle Heritage</title>
+    <meta name="description" content="Menjelajah Alam, Mengenal Budaya, Menemukan Dongko. Website resmi profil dan potensi Desa Dongko oleh Tim KKN UBHI 2026.">
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Leaflet CSS for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <img src="assets/logo_kkn.png" alt="Logo KKN UBHI 2026 Desa Dongko" class="header-logo">
-            <h1>Desa Dongko</h1>
-            <p>Jelajahi keindahan, budaya, dan kearifan lokal melalui literatur dan dokumenter dari Tim KKN UBHI 2026.</p>
-        </header>
 
-        <section>
-            <h2 class="section-title"><i class="fa-solid fa-users"></i> Tim KKN UBHI 2026</h2>
-            <div class="embed-container">
-                <iframe src="https://drive.google.com/file/d/1RBtB_lOEXsFZn5nCgOtbMJcONXMdma3m/preview" allow="autoplay" allowfullscreen></iframe>
+    <!-- NAVBAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-content">
+            <div class="nav-logos">
+                <img src="assets/logo_kabupaten_baru.png" alt="Kabupaten Trenggalek" class="nav-logo">
+                <img src="assets/logo_kkn.png" alt="KKN UBHI 2026" class="nav-logo">
+            </div>
+            <button class="nav-toggle" aria-label="Toggle Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        
+        <div class="hero-content fade-up">
+            <span class="hero-eyebrow">DESTINASI ALAM & BUDAYA</span>
+            <h1 class="hero-title">Desa Dongko</h1>
+            <p class="hero-desc">Menjelajah Alam. Mengenal Budaya. Menemukan Keajaiban Tersembunyi di Jantung Trenggalek.</p>
+            <a href="#profil" class="btn btn-primary hero-btn">
+                Mulai Menjelajah <i class="fa-solid fa-arrow-down"></i>
+            </a>
+        </div>
+        
+        <div class="hero-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,119.52,187.5,110.22Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <main>
+        <!-- PROFIL DESA SECTION -->
+        <section id="profil" class="section profil-section">
+            <div class="section-container">
+                <div class="section-header fade-up">
+                    <span class="section-number">01 / PROFIL</span>
+                    <h2 class="section-title">Profil Desa Dongko</h2>
+                    <p class="section-desc">Mengenal lebih dekat potensi geografis, demografis, dan pesona masyarakat Desa Dongko.</p>
+                </div>
+                
+                <div class="profil-content">
+                    <div class="profil-text fade-up delay-1">
+                        <p>Desa Dongko merupakan desa dataran tinggi dengan luas wilayah sekitar 1.500 hektare dan jumlah penduduk mencapai 11.153 jiwa. Wilayahnya terbagi menjadi 7 dusun, 71 RT, dan 14 RW, dengan kondisi geografis berupa perbukitan yang dipisahkan oleh pegunungan. Mayoritas masyarakat bekerja sebagai petani dan pekebun, selain itu terdapat pula pegawai negeri, TNI, Polri, pengusaha, dan pengrajin. Desa Dongko memiliki potensi unggulan berupa UMKM, kerajinan bambu, peternakan Kambing Etawa, serta produk pertanian.</p>
+                        <p>Selain potensi ekonomi, Desa Dongko juga memiliki budaya dan adat istiadat yang masih dijaga hingga kini. Salah satunya adalah Ngitung Batih, yang dilaksanakan setiap 1 Suro sebagai momentum menghitung cacah jiwa, bersyukur kepada Allah SWT, serta menggelar pentas seni budaya. Pelestarian budaya terus dilakukan melalui kegiatan rutin masyarakat, lingkungan sekolah, dan berbagai lembaga pendidikan. Pemerintah desa berharap budaya seni, gotong royong, kebersihan, dan kepedulian terhadap lingkungan terus dijaga agar masyarakat Dongko dapat hidup dengan tertib, damai, dan nyaman.</p>
+                    </div>
+                    
+                    <div class="profil-stats fade-up delay-2">
+                        <div class="stat-card">
+                            <span class="stat-value">1.500+</span>
+                            <span class="stat-label">Hektare Wilayah</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value">11.153</span>
+                            <span class="stat-label">Jiwa Penduduk</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value">7</span>
+                            <span class="stat-label">Dusun</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value">14</span>
+                            <span class="stat-label">RW</span>
+                        </div>
+                        <div class="stat-card">
+                            <span class="stat-value">71</span>
+                            <span class="stat-label">RT</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section>
-            <h2 class="section-title"><i class="fa-solid fa-book-open"></i> Ebook Desa Dongko</h2>
-            <div class="gallery-card" style="margin-bottom: 50px;">
-                <div class="gallery-icon" style="color: #00c4cc;">
-                    <i class="fa-solid fa-file-pdf"></i>
+        <!-- SEJARAH DESA SECTION -->
+        <section class="section history-section has-bg">
+            <div class="section-container">
+                <div class="section-header fade-up">
+                    <span class="section-number">02 / SEJARAH</span>
+                    <h2 class="section-title">Sejarah Desa Dongko</h2>
+                    <p class="section-desc">Jejak masa lalu yang mengukir identitas dan melahirkan nama Desa Dongko.</p>
                 </div>
-                <div class="gallery-content">
-                    <h3 class="card-title">Buku Panduan & Sejarah</h3>
-                    <p class="card-desc" style="margin-bottom: 15px;">Pelajari asal-usul, potensi, dan perkembangan Desa Dongko dari masa ke masa.</p>
-                    <a href="https://canva.link/v2hnzeashzaxcu1" target="_blank" class="btn btn-gallery" style="background: linear-gradient(135deg, #00c4cc, #7d2ae8); border: none;">Buka Ebook (Canva)</a>
+                
+                <div class="timeline fade-up delay-1">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">1919</span>
+                            <h3 class="timeline-title">Perkembangan Pasar</h3>
+                            <p>Pada masa penjajahan Belanda, wilayah ini menjadi bagian dari perkembangan kawasan pasar. Tercatat adanya pasar yang mulai berdiri sekitar tahun 1919, yang turut menjadi bagian penting dari denyut nadi perekonomian dan perjalanan sejarah desa.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">1920</span>
+                            <h3 class="timeline-title">Pohon Bendo & Nangka</h3>
+                            <p>Menurut cerita turun-temurun, dahulu terdapat pohon Bendo dan Nangka yang tumbuh berdampingan di wilayah selatan desa. Tempat ini sangat rindang dan sejuk sehingga sering dijadikan tempat berteduh. Dari gabungan nama pohon <strong>Bendo</strong> dan <strong>Nangka</strong> inilah, lahir sebutan <strong>Dongko</strong>.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <div class="timeline-dot current"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-year">Masa Kini</span>
+                            <h3 class="timeline-title">Dongko Modern</h3>
+                            <p>Seiring berjalannya waktu, wilayah tersebut terus berkembang, mempertahankan warisan budaya agraris sembari merangkul kemajuan zaman, dan resmi dikenal sebagai Desa Dongko yang kita kenal sekarang.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <h2 class="section-title"><i class="fa-solid fa-video"></i> Dokumenter Desa Dongko</h2>
-            <p class="section-desc">Saksikan pesona alam dan keseharian warga Desa Dongko yang hijau dan asri.</p>
-            <div class="embed-container">
-                <iframe src="https://drive.google.com/file/d/1q0HJ902EMjp3VFCByeqWo4iiKB0CY700/preview" allow="autoplay" allowfullscreen></iframe>
+        <!-- DONGKO CULTURE SECTION -->
+        <section class="section culture-section">
+            <div class="section-container">
+                <div class="section-header fade-up">
+                    <span class="section-number">03 / BUDAYA</span>
+                    <h2 class="section-title">Dongko Culture</h2>
+                    <p class="section-desc">Kekayaan seni dan tradisi lokal yang menjadi kebanggaan serta identitas warga Desa Dongko.</p>
+                </div>
+                
+                <!-- Horizontal Scroll Container for Mobile -->
+                <div class="culture-carousel fade-up delay-1">
+                    <div class="culture-card">
+                        <div class="culture-image">
+                            <div class="culture-number">01</div>
+                            <i class="fa-solid fa-users culture-icon"></i>
+                        </div>
+                        <div class="culture-body">
+                            <h3 class="culture-title">Ngitung Batih</h3>
+                            <p>Tradisi masyarakat Desa Dongko yang dilaksanakan setiap 1 Suro (1 Muharam) sebagai bentuk rasa syukur dan doa keselamatan. Diisi dengan menghitung anggota keluarga sebagai simbol eratnya kebersamaan, dan diakhiri dengan syukuran serta Ambeng.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="culture-card">
+                        <div class="culture-image">
+                            <div class="culture-number">02</div>
+                            <i class="fa-solid fa-horse-head culture-icon"></i>
+                        </div>
+                        <div class="culture-body">
+                            <h3 class="culture-title">Turonggo Yakso</h3>
+                            <p>Kesenian Jaranan khas Desa Dongko yang berakar dari tradisi agraris dan ritual Baritan. Menggambarkan perjuangan manusia melawan keburukan (Yakso/Raksasa). Kesenian ini kini telah menjadi salah satu identitas budaya utama Kabupaten Trenggalek.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="culture-card">
+                        <div class="culture-image">
+                            <div class="culture-number">03</div>
+                            <i class="fa-solid fa-drum culture-icon"></i>
+                        </div>
+                        <div class="culture-body">
+                            <h3 class="culture-title">Terbang Eloh</h3>
+                            <p>Kesenian musik tradisional yang menggunakan alat musik rebana, jedor, dan kendang panjang. Memiliki ciri khas vokal bernada tinggi dan melengking. Lirik dan tembangnya sarat akan pesan kebaikan serta nilai-nilai ajaran luhur budaya lokal.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section>
-            <h2 class="section-title"><i class="fa-solid fa-images"></i> Galeri Dokumentasi</h2>
-            <div class="gallery-card">
-                <div class="gallery-icon">
-                    <i class="fa-solid fa-folder-open"></i>
+        <!-- PETA INTERAKTIF SECTION -->
+        <section class="section map-section has-bg">
+            <div class="section-container">
+                <div class="section-header fade-up">
+                    <span class="section-number">04 / JELAJAHI DONGKO</span>
+                    <h2 class="section-title">Temukan Lokasi Penting di Desa Dongko</h2>
+                    <p class="section-desc">Jelajahi berbagai fasilitas, ruang publik, dan lokasi penting di sekitar Desa Dongko.</p>
                 </div>
-                <div class="gallery-content">
-                    <h3 class="card-title">Dokumentasi Kegiatan KKN</h3>
-                    <p class="card-desc" style="margin-bottom: 15px;">Lihat kumpulan momen dan kegiatan seru kami selama mengabdi di Desa Dongko.</p>
-                    <a href="https://drive.google.com/drive/folders/1rc0G-8IaMUEio5bHOF_OFaoGbzxy_oe0?hl=ID" target="_blank" class="btn btn-gallery">Buka Folder Google Drive</a>
+                
+                <div class="map-interactive-wrapper fade-up delay-1">
+                    
+                    <!-- Search & Tools -->
+                    <div class="map-toolbar">
+                        <div class="map-search-container">
+                            <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                            <input type="text" id="map-search-input" placeholder="Cari lokasi di Dongko..." autocomplete="off">
+                            <div id="map-search-results" class="search-results"></div>
+                        </div>
+                        <button id="btn-locate" class="btn-map-tool">
+                            <i class="fa-solid fa-location-crosshairs"></i> Lokasi Saya
+                        </button>
+                    </div>
+
+                    <!-- Filters (Horizontal scroll on mobile) -->
+                    <div class="map-filters-scroll">
+                        <div class="map-filters">
+                            <button class="filter-chip active" data-filter="semua">Semua</button>
+                            <button class="filter-chip" data-filter="pemerintahan">Pemerintahan</button>
+                            <button class="filter-chip" data-filter="kesehatan">Kesehatan</button>
+                            <button class="filter-chip" data-filter="pendidikan">Pendidikan</button>
+                            <button class="filter-chip" data-filter="ibadah">Ibadah</button>
+                            <button class="filter-chip" data-filter="pasar">Pasar</button>
+                            <button class="filter-chip" data-filter="lapangan">Lapangan</button>
+                            <button class="filter-chip" data-filter="spbu">SPBU</button>
+                        </div>
+                    </div>
+
+                    <!-- Map Container -->
+                    <div id="dongko-map" class="map-container"></div>
+                    
+                    <!-- Map Legend -->
+                    <div class="map-legend">
+                        <h4 class="legend-title">LEGENDA</h4>
+                        <div class="legend-grid">
+                            <div class="legend-item"><span class="legend-color" style="border: 2px dashed #D4AF37; background: rgba(212,175,55,0.2);"></span> Batas Desa</div>
+                            <div class="legend-item"><i class="fa-solid fa-building-columns" style="color: #D4AF37;"></i> Pemerintahan</div>
+                            <div class="legend-item"><i class="fa-solid fa-hospital" style="color: #e63946;"></i> Puskesmas</div>
+                            <div class="legend-item"><i class="fa-solid fa-school" style="color: #1d3557;"></i> Pendidikan</div>
+                            <div class="legend-item"><i class="fa-solid fa-store" style="color: #f4a261;"></i> Pasar</div>
+                            <div class="legend-item"><i class="fa-solid fa-mosque" style="color: #2a9d8f;"></i> Masjid</div>
+                            <div class="legend-item"><i class="fa-solid fa-futbol" style="color: #2D4A3E;"></i> Lapangan</div>
+                            <div class="legend-item"><i class="fa-solid fa-gas-pump" style="color: #457b9d;"></i> SPBU</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section>
-            <h2 class="section-title"><i class="fa-solid fa-share-nodes"></i> Media Sosial KKN</h2>
-            <div class="grid-container">
-                <div class="card">
-                    <div class="card-icon" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);">
+        <!-- ABOUT / KKN TEAM SECTION -->
+        <section class="section about-section">
+            <div class="section-container">
+                <div class="section-header fade-up">
+                    <span class="section-number">05 / PENGABDIAN</span>
+                    <h2 class="section-title">Tim KKN UBHI 2026</h2>
+                    <p class="section-desc">Bersama membangun desa, merawat tradisi, dan mengembangkan potensi lokal untuk masa depan Dongko yang lebih cerah.</p>
+                </div>
+                
+                <div class="team-photo-wrapper fade-up delay-1">
+                    <img src="assets/tim_kkn.jpg" alt="Foto Bersama Tim KKN UBHI 2026 Desa Dongko" class="team-photo" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <!-- DISCOVER / EBOOK SECTION -->
+        <section class="section discover-section has-bg">
+            <div class="section-container">
+                <div class="section-header fade-up">
+                    <span class="section-number">06 / LITERATUR</span>
+                    <h2 class="section-title">Ensiklopedia Dongko</h2>
+                    <p class="section-desc">Pelajari lebih dalam mengenai asal-usul, sejarah, kekayaan alam, serta potensi pertanian yang diwariskan dari generasi ke generasi.</p>
+                </div>
+                
+                <div class="ebook-wrapper fade-up delay-1">
+                    <iframe src="https://www.canva.com/design/DAHSV7uhyo8/uy3n6tuXdxhaCKntDWPDOw/view?embed" allow="fullscreen" loading="lazy" title="Buku Panduan Desa Dongko"></iframe>
+                </div>
+                
+                <div class="text-center fade-up delay-2" style="text-align: center; margin-top: 2rem;">
+                    <a href="https://www.canva.com/design/DAHSV7uhyo8/uy3n6tuXdxhaCKntDWPDOw/view" target="_blank" class="btn btn-secondary">
+                        Baca Layar Penuh <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CINEMATIC DOCUMENTARY SECTION -->
+        <section class="section documentary-section">
+            <div class="section-container">
+                <div class="section-header fade-up">
+                    <span class="section-number">07 / CINEMATIC</span>
+                    <h2 class="section-title">Dokumenter Desa</h2>
+                    <p class="section-desc">Saksikan pesona alam dan keseharian warga Desa Dongko yang hijau dan asri melalui rekaman lensa kami.</p>
+                </div>
+                
+                <div class="tiktok-wrapper fade-up delay-1" style="display: flex; justify-content: center;">
+                    <blockquote class="tiktok-embed" cite="https://www.tiktok.com/@kknubhi26_dongko/video/7683008066740112658" data-video-id="7683008066740112658" style="max-width: 605px;min-width: 325px;" > <section> <a target="_blank" title="@kknubhi26_dongko" href="https://www.tiktok.com/@kknubhi26_dongko?refer=embed">@kknubhi26_dongko</a> <p>Pesona Desa_Dongko  DONGKO CULTURE — Warisan yang Terus Hidup 🌾 Di Desa Dongko, budaya bukan sekadar cerita masa lalu. Ia tumbuh, diwariskan, dan terus hidup di tengah masyarakat. ✨ Ngitung Batih Tradisi yang dilaksanakan setiap 1 Suro atau 1 Muharam sebagai wujud rasa syukur dan doa keselamatan. Menghitung anggota keluarga menjadi simbol kebersamaan, keberadaan, dan eratnya hubungan antarwarga, yang dilengkapi dengan syukuran dan Ambeng. 🐎 Turonggo Yakso Kesenian khas Dongko yang berakar dari tradisi agraris dan ritual Baritan. Turonggo berarti kuda, sedangkan Yakso berarti raksasa—sebuah simbol perjuangan manusia melawan keburukan dan angkara murka. Dua tradisi, satu cerita: tentang identitas, kebersamaan, dan budaya yang terus diwariskan. 📍 Desa Dongko, Trenggalek 🎥 Dokumenter Dongko Culture #DongkoCulture #DesaDongko #Dongko #Trenggalek #NgitungBatih #TuronggoYakso #BudayaJawa #BudayaTrenggalek #KKNUBHI2026 #DokumenterBudaya #JelajahBudaya</p> <a target="_blank" title="♬ suara asli ARUNA MANDALA KKN DONGKO 26" href="https://www.tiktok.com/music/suara-asli-ARUNA-MANDALA-KKN-DONGKO-26-0?refer=embed">♬ suara asli ARUNA MANDALA KKN DONGKO 26</a> </section> </blockquote> <script async src="https://www.tiktok.com/embed.js"></script>
+                </div>
+            </div>
+        </section>
+
+        <!-- GALLERY SECTION -->
+        <section class="section gallery-section has-bg">
+            <div class="section-container">
+                <div class="section-header fade-up">
+                    <span class="section-number">08 / MOMENTS</span>
+                    <h2 class="section-title">Galeri Dokumentasi</h2>
+                    <p class="section-desc">Kumpulan momen, senyum, dan kerja keras selama kegiatan pengabdian kami di Desa Dongko.</p>
+                </div>
+                
+                <div class="modern-card row-card fade-up delay-1">
+                    <div class="card-icon-circle">
+                        <i class="fa-regular fa-images"></i>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-heading">Arsip Foto KKN</h3>
+                        <p class="card-text">Akses seluruh dokumentasi kegiatan dari program KKN UBHI 2026 secara lengkap di Google Drive.</p>
+                        <a href="https://drive.google.com/drive/folders/1rc0G-8IaMUEio5bHOF_OFaoGbzxy_oe0?hl=ID" target="_blank" class="btn btn-outline">
+                            Buka Galeri Drive
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOCIAL MEDIA SECTION -->
+        <section class="section social-section">
+            <div class="section-container">
+                <div class="section-header fade-up">
+                    <span class="section-number">09 / CONNECT</span>
+                    <h2 class="section-title">Media Sosial</h2>
+                    <p class="section-desc">Ikuti keseharian dan update terbaru seputar program kami melalui platform media sosial resmi.</p>
+                </div>
+                
+                <div class="social-grid">
+                    <a href="https://www.instagram.com/kknubhi26_dongko/" target="_blank" class="social-card instagram fade-up delay-1" aria-label="Instagram KKN UBHI 26 Dongko">
                         <i class="fa-brands fa-instagram"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Akun Instagram</h3>
-                        <p class="card-desc">Ikuti kegiatan harian dan pembaruan terbaru dari tim KKN di Desa Dongko.</p>
-                        <a href="https://www.instagram.com/kknubhi26_dongko/" target="_blank" class="btn" style="background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); border: none;">Kunjungi Instagram</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon" style="background: linear-gradient(135deg, #000000, #ff0050);">
+                        <span class="social-name">@kknubhi26_dongko</span>
+                        <span class="social-action">Follow on Instagram</span>
+                    </a>
+                    
+                    <a href="https://www.tiktok.com/@kknubhi26_dongko/" target="_blank" class="social-card tiktok fade-up delay-2" aria-label="TikTok KKN UBHI 26 Dongko">
                         <i class="fa-brands fa-tiktok"></i>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="card-title">Akun TikTok</h3>
-                        <p class="card-desc">Saksikan video dokumenter dan keseruan kegiatan KKN kami melalui lensa TikTok.</p>
-                        <a href="https://www.tiktok.com/@kknubhi26_dongko/" target="_blank" class="btn" style="background-color: #ff0050;">Kunjungi TikTok</a>
-                    </div>
+                        <span class="social-name">@kknubhi26_dongko</span>
+                        <span class="social-action">Watch on TikTok</span>
+                    </a>
                 </div>
             </div>
         </section>
-    </div>
+    </main>
 
-    <footer>
-        <p>&copy; 2026 KKN UBHI Desa Dongko. All rights reserved.</p>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logos">
+                <img src="assets/logo_kabupaten_baru.png" alt="Kabupaten Trenggalek" class="footer-logo">
+                <img src="assets/logo_kkn.png" alt="KKN UBHI 2026" class="footer-logo">
+            </div>
+            <p class="footer-text">Merajut karsa, mengabdi untuk bangsa. Desa Dongko, Trenggalek.</p>
+            <div class="footer-bottom">
+                <p>&copy; 2026 KKN UBHI Desa Dongko. All rights reserved.</p>
+            </div>
+        </div>
     </footer>
+
+    <!-- INTERACTION SCRIPTS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Navbar Scroll Effect
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Fade Up Animation Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Optional: Stop observing once visible
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            const fadeElements = document.querySelectorAll('.fade-up');
+            fadeElements.forEach(el => observer.observe(el));
+        });
+    </script>
+    
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <!-- Custom Map Logic -->
+    <script src="assets/map-data.js"></script>
 </body>
 </html>
